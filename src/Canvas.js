@@ -9,7 +9,7 @@ import {
 import Wheel from "./Wheel";
 import Pointer from "./Pointer";
 import Camera from "./Camera";
-import wheelimage from "./test.jpeg";
+import wheelimage from "./skin.jpeg";
 
 function CanvasRender() {
   return (
@@ -32,9 +32,9 @@ function CanvasRender() {
       <pointLight position={[150, 150, 150]} intensity={0.55} />
       <group rotation={[0.2, -0.4, 0]}>
         <Suspense fallback={null}>
-          <Wheel position={[0, 0, -0.3]} src={wheelimage} />
+          <Wheel position={[0, 0, 0]} src={wheelimage} />
         </Suspense>
-        <Pointer position={[1.1, 0, 0.3]} rotation={[1, 0, 1.5]} />
+        <Pointer position={[0.2, -1, 0.9]} rotation={[1.7, 0, 0]} />
       </group>
     </Canvas>
   );
