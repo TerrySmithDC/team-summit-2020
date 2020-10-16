@@ -9,7 +9,6 @@ const meshRotX = THREE.Math.degToRad(85);
 function Wheel(props) {
   const { src, ...meshprops } = props;
   const texture = useLoader(THREE.TextureLoader, src);
-  console.log(texture);
   const [spring, setSpring] = useSpring(() => ({
     from: {
       rotation: [meshRotX, THREE.Math.degToRad(90), 0],
@@ -28,7 +27,7 @@ function Wheel(props) {
       if (tx > window.innerWidth / 2) {
         xmod = -1;
       }
-      if (ty > window.innerHeight / 2) {
+      if (ty < window.innerHeight / 2) {
         ymod = -1;
       }
 
