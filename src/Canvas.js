@@ -9,7 +9,8 @@ import {
 import Wheel from "./Wheel";
 import Pointer from "./Pointer";
 import Camera from "./Camera";
-import wheelimage from "./skin.jpeg";
+import { KeyLight, FillLight, RimLight } from "./Light"
+import wheelTexture from "./wheelTexture.jpg";
 
 function CanvasRender() {
   return (
@@ -28,14 +29,17 @@ function CanvasRender() {
         <Noise opacity={0.02} />
         <Vignette eskil={false} offset={0.1} darkness={0.8} />
       </EffectComposer>
-      <ambientLight />
-      <pointLight position={[150, 150, 150]} intensity={0.55} />
+      <KeyLight brightness={5.6} color="#ffbdf4" />
+      <FillLight brightness={2.6} color="#bdefff" />
+      <RimLight brightness={54} color="#fff" />
+      {/* <ambientLight /> */}
+      {/* <pointLight position={[150, 150, 150]} intensity={0.55} /> */}
       <group rotation={[0.2, -0.4, 0]}>
         <Suspense fallback={null}>
-          <Wheel position={[0, 0, 0]} src={wheelimage} />
+          <Wheel position={[0, 0, 0]} src={wheelTexture} />
         </Suspense>
-        <Pointer position={[0.2, -1, 0.9]} rotation={[1.7, 0, 0]} />
       </group>
+      <Pointer position={[0, -1.1, 0.9]} rotation={[-0.5, 1.25, -0.5]} />
     </Canvas>
   );
 }
