@@ -52,7 +52,7 @@ function Wheel(props) {
   );
 
   return (
-    <a.mesh {...bind()} rotation={spring.rotation} {...meshprops} receiveShadow>
+    <a.mesh {...bind()} rotation={spring.rotation} {...meshprops}>
       <cylinderBufferGeometry attach="geometry" args={[1, 1, 1, 16]} />
         <meshStandardMaterial attach="material" map={texture} roughnessMap={texture}  roughness="0.1" />
     </a.mesh>
