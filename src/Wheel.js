@@ -15,12 +15,18 @@ function Wheel(props) {
     from: {
       rotation: [meshRotX, Math.degToRad(90), 0],
     },
-    config: config.molasses,
+    config: config.molasses
   }));
 
   const bind = useDrag(
-    ({ distance,  direction: [xDir] }) => {
-      const rotation = Math.degToRad(distance * xDir);
+    ({ velocity, movement: [x], initial: [_, ty] }) => {
+      let rotation
+      if (ty < window.innerHeight / 2) {	
+        rotation = Math.degToRad(velocity * x * -1 );
+      } else {
+        rotation = Math.degToRad(velocity * x );
+      }
+
       // if xy starts above half width or hight reverse so wheel spins in the correct direction
       setSpring(() => {
         return {
