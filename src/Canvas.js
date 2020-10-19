@@ -1,54 +1,67 @@
 import React, { Suspense } from "react";
 import { Canvas } from "react-three-fiber";
-import {
-  EffectComposer,
-  Noise,
-  Vignette,
-} from "@react-three/postprocessing";
 
 import { useTransition, a } from "react-spring/three";
-
+import { useProgress, Html } from "@react-three/drei";
 
 import Wheel from "./Wheel";
 import Pointer from "./Pointer";
 import Camera from "./Camera";
-import { KeyLight, FillLight, RimLight } from "./Light"
+import Particles from "./Particles";
+import Effects from "./Effects";
+import Lights from "./Light";
+
+function Loader() {
+  const { progress } = useProgress();
+  return (
+    <Html center>
+      <span className="loader">{progress}</span>
+    </Html>
+  );
+}
 
 function CanvasRender() {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   const transitions = useTransition(true, null, {
     initial: {
-      position: [-3, 0.4, 0],
-      rotation: [-1, 0, 8]
+      position: [-0.5, 4, -4],
+      rotation: [-1, 0, 30],
     },
     enter: {
+      delay: 300,
       position: [0, 0, 0],
-      rotation: [0.2, -0.4, 0]
+      rotation: [0.2, -0.4, 0],
     },
-    config: { duration: 800 }
+    config: { mass: 5, tension: 500, friction: 100 },
   });
-
 
   return (
     <Canvas
       gl={{ alpha: false }}
       onCreated={({ gl }) => gl.setClearColor("#FF4A89")}
+      pixelRatio={Math.min(2, isMobile ? window.devicePixelRatio : 1)}
     >
       <Camera position={[0, 0, 3]} near={0.1} far={440} />
-      <EffectComposer>
-        <Noise opacity={0.02} />
-        <Vignette eskil={false} offset={0.1} darkness={0.8} />
-      </EffectComposer>
-      <KeyLight brightness={5.6} color="#ffbdf4" />
-      <FillLight brightness={2.6} color="#bdefff" />
-      <RimLight brightness={54} color="#fff" />
-      {transitions.map(({  props, key }) => 
-        <a.group key={key} rotation={props.rotation}  position={props.position}>
-          <Suspense fallback={null}>
+      <Effects />
+      <Lights />
+      {/* <Stats
+        showPanel={0} // Start-up panel (default=0)
+        className="stats" // Optional className to add to the stats container dom element
+      /> */}
+      <Suspense fallback={<Loader />}>
+        {transitions.map(({ props, key }) => (
+          <a.group
+            key={key}
+            rotation={props.rotation}
+            position={props.position}
+          >
             <Wheel position={[0, 0, 0]} />
-          </Suspense>
-        </a.group>
-      )}
-      <Pointer position={[0, -1.1, 0.9]} rotation={[-0.5, 1.4, -0.5]} />
+          </a.group>
+        ))}
+        <Pointer position={[0, -1.1, 0.9]} rotation={[-0.5, 1.4, -0.5]} />
+        <Particles count={isMobile ? 200 : 500} />
+      </Suspense>
     </Canvas>
   );
 }

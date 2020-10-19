@@ -33,3 +33,7 @@ article {
   background: white;
   padding: 1rem;
 }
+
+.loader {
+  font-size: 5rem;
+}
