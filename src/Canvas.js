@@ -5,13 +5,28 @@ import {
   Noise,
   Vignette,
 } from "@react-three/postprocessing";
+
+import { useTransition, a } from "react-spring/three";
+
+
 import Wheel from "./Wheel";
 import Pointer from "./Pointer";
 import Camera from "./Camera";
 import { KeyLight, FillLight, RimLight } from "./Light"
-import wheelTexture from "./wheelTexture.jpg";
 
 function CanvasRender() {
+  const transitions = useTransition(true, null, {
+    initial: {
+      position: [-2, 0.4, 0],
+      rotation: [-0.5, 0, 5]
+    },
+    enter: {
+      position: [0, 0, 0],
+      rotation: [0.2, -0.4, 0]
+    }
+  });
+
+
   return (
     <Canvas
       gl={{ alpha: false }}
@@ -25,12 +40,14 @@ function CanvasRender() {
       <KeyLight brightness={5.6} color="#ffbdf4" />
       <FillLight brightness={2.6} color="#bdefff" />
       <RimLight brightness={54} color="#fff" />
-      <group rotation={[0.2, -0.4, 0]}>
-        <Suspense fallback={null}>
-          <Wheel position={[0, 0, 0]} src={wheelTexture} />
-        </Suspense>
-      </group>
-      <Pointer position={[0, -1.1, 0.9]} rotation={[-0.5, 1.25, -0.5]} />
+      {transitions.map(({  props, key }) => 
+        <a.group key={key} rotation={props.rotation}  position={props.position}>
+          <Suspense fallback={null}>
+            <Wheel position={[0, 0, 0]} />
+          </Suspense>
+        </a.group>
+      )}
+      <Pointer position={[0, -1.1, 0.9]} rotation={[-0.5, 1.4, -0.5]} />
     </Canvas>
   );
 }
