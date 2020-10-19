@@ -2,7 +2,7 @@ import React from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { useDrag } from "react-use-gesture";
 import { Math } from "three";
-import { useTexture } from "@react-three/drei";
+import { useTexture } from "@react-three/drei/useTexture";
 
 import wheelTexture from "./wheelTexture.jpg";
 

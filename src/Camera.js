@@ -1,6 +1,4 @@
 import React, { useRef, useEffect } from "react";
-
-import "./App.css";
 import { useThree, useFrame } from "react-three-fiber";
 
 function Camera(props) {
