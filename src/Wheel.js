@@ -9,6 +9,7 @@ import wheelTexture from "./wheelTexture.jpg";
 const meshRotX = Math.degToRad(85);
 
 function Wheel(props) {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const { ...meshprops } = props;
   const texture = useTexture(wheelTexture);
   const [spring, setSpring] = useSpring(() => ({
@@ -17,6 +18,8 @@ function Wheel(props) {
     },
     config: config.molasses,
   }));
+
+  const scale = isMobile ? [0.75, 0.75, 0.75] : [1, 1, 1];
 
   const bind = useDrag(
     ({ velocity, movement: [x], initial: [_, ty] }) => {
@@ -38,7 +41,7 @@ function Wheel(props) {
   );
 
   return (
-    <a.mesh {...bind()} rotation={spring.rotation} {...meshprops}>
+    <a.mesh {...bind()} rotation={spring.rotation} {...meshprops} scale={scale}>
       <cylinderBufferGeometry attach="geometry" args={[1, 1, 1, 16]} />
       <meshStandardMaterial
         attach="material"

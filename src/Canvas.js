@@ -22,7 +22,7 @@ function Loader() {
 
 function CanvasRender() {
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
+  const pointerPos = isMobile ? [0, -1.05, 0.9] : [0, -1.3, 0.9];
   const transitions = useTransition(true, null, {
     initial: {
       position: [-0.5, 4, -4],
@@ -56,11 +56,11 @@ function CanvasRender() {
             rotation={props.rotation}
             position={props.position}
           >
-            <Wheel position={[0, 0, 0]} />
+            <Wheel />
           </a.group>
         ))}
-        <Pointer position={[0, -1.1, 0.9]} rotation={[-0.5, 1.4, -0.5]} />
-        <Particles count={isMobile ? 200 : 500} />
+        <Pointer position={pointerPos} rotation={[-0.5, 1.4, -0.5]} />
+        {!isMobile && <Particles count={800} />}
       </Suspense>
     </Canvas>
   );
