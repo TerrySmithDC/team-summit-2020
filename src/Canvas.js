@@ -1,15 +1,16 @@
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import { Canvas } from "react-three-fiber";
 
 import { useTransition, a } from "react-spring/three";
 import { useProgress, Html } from "@react-three/drei";
 
-import Wheel from "./Wheel";
 import Pointer from "./Pointer";
 import Camera from "./Camera";
-import Particles from "./Particles";
 import Effects from "./Effects";
 import Lights from "./Light";
+
+const Wheel = lazy(() => import('./Wheel'));
+const Particles = lazy(() => import('./Particles'));
 
 function Loader() {
   const { progress } = useProgress();
@@ -60,7 +61,7 @@ function CanvasRender() {
           </a.group>
         ))}
         <Pointer position={pointerPos} rotation={[-0.5, 1.4, -0.5]} />
-        {!isMobile && <Particles count={800} />}
+        {!isMobile && <Suspense fallback={null}><Particles count={800} /></Suspense>}
       </Suspense>
     </Canvas>
   );
