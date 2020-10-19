@@ -17,13 +17,14 @@ import { KeyLight, FillLight, RimLight } from "./Light"
 function CanvasRender() {
   const transitions = useTransition(true, null, {
     initial: {
-      position: [-2, 0.4, 0],
-      rotation: [-0.5, 0, 5]
+      position: [-3, 0.4, 0],
+      rotation: [-1, 0, 8]
     },
     enter: {
       position: [0, 0, 0],
       rotation: [0.2, -0.4, 0]
-    }
+    },
+    config: { duration: 800 }
   });
 
 
