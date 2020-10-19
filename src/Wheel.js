@@ -17,30 +17,8 @@ function Wheel(props) {
   }));
 
   const bind = useDrag(
-    ({ velocity, initial, distance }) => {
-      const [tx, ty] = initial;
-
-      let rotation;
-      let xmod = 1;
-      let ymod = 1;
-
-      if (tx > window.innerWidth / 2) {
-        xmod = -1;
-      }
-      if (ty < window.innerHeight / 2) {
-        ymod = -1;
-      }
-
-      if (xmod && ymod) {
-        rotation = THREE.Math.degToRad(distance * velocity);
-      } else if (ymod && !xmod) {
-        rotation = THREE.Math.degToRad(distance * velocity);
-      } else if (!ymod && xmod) {
-        rotation = THREE.Math.degToRad(distance * velocity);
-      } else {
-        rotation = THREE.Math.degToRad(-distance * velocity);
-      }
-
+    ({ distance,  direction: [xDir] }) => {
+      const rotation = THREE.Math.degToRad(distance * xDir);
       // if xy starts above half width or hight reverse so wheel spins in the correct direction
       setSpring(() => {
         return {
