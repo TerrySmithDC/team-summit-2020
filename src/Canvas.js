@@ -2,7 +2,8 @@ import React, { Suspense, lazy } from "react";
 import { Canvas } from "react-three-fiber";
 
 import { useTransition, a } from "react-spring/three";
-import { useProgress, Html } from "@react-three/drei";
+import { Html } from "@react-three/drei/Html";
+import { useProgress } from "@react-three/drei/useProgress";
 
 import Pointer from "./Pointer";
 import Camera from "./Camera";
